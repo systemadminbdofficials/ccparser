@@ -1,84 +1,17 @@
-🚀 Features
-🔍 Smart Extraction: Extracts card number, expiry date (month/year), and CVV from a string.
-📏 Standardized Formatting: Converts card numbers into xxxx xxxx xxxx xxxx format.
-✅ Luhn Validation: Ensures card validity using the industry-standard Luhn algorithm.
-🗓️ Expiry & CVV Checks: Validates expiry date and CVV length based on card type.
-💳 Card Type Detection: Identifies major card providers (Visa, MasterCard, AMEX, etc.).
-🔒 Masked Output Option: Returns a masked format (**** **** **** 5379).
-🔗 Multiple Delimiters: Supports delimiters like |, :, and spaces.
-📆 Flexible Expiry Handling: Accepts expiry years in both YYYY and YY formats.
-⚡ Easy-to-Use API: Well-structured API for seamless integration.
-🖥️ Command-Line Support: Provides a CLI tool for quick parsing.
-📖 Well-Documented: Extensive Markdown documentation (README.md).
-📦 PyPI Ready: Structured for easy PyPI distribution.
-🛠️ CI/CD Integration: Uses GitHub Actions for automated testing.
-🆕 Card Number Generation: Generate valid card numbers for testing purposes.
-🆕 Additional Card Types: Supports JCB, Diners Club, and UnionPay.
-⚠️ Disclaimer
-This library is intended for educational and legitimate purposes only.
+🚀 Features🔍 Smart Extraction: Automatically extracts card number, expiry date (MM/YY or MM/YYYY), and CVV from any input string.📏 Standardized Formatting: Converts messy card numbers into a clean xxxx xxxx xxxx xxxx format.✅ Luhn Validation: Verifies card numbers using the industry-standard Luhn algorithm.🗓️ Expiry & CVV Checks: Validates expiration dates and CVV length based on the specific card type.💳 Card Type Detection: Identifies major networks (Visa, MasterCard, AMEX, Discover, JCB, etc.).🔒 Masked Output: Securely displays card numbers (e.g., **** **** **** 5379).🔗 Flexible Delimiters: Supports parsing strings separated by |, :, or spaces.🆕 Card Generation: Generate valid card numbers for testing and development purposes.🖥️ Command-Line Support: Includes a CLI tool for rapid terminal-based parsing.💳 Supported Card TypesCCParser uses advanced regex patterns to accurately identify card providers:ProviderRegex Pattern (Simplified)Visa^4[0-9]{12}(?:[0-9]{3})?$MasterCard^5[1-5][0-9]{14}$AMEX^3[47][0-9]{13}$Discover`^6(?:011JCB`^(?:2131Diners Club`^3(?:0[0-5]UnionPay^62[0-9]{14,17}$📥 InstallationInstall the package directly via PyPI:Bashpip install ccparser
+📝 Usage ExamplesSupported Input FormatsCCParser is highly flexible and accepts various input styles:4111111111111111|12/30|1234111111111111111:12:30:1234111111111111111 12 2030 123Python APIPythonfrom ccparser import CCParser
 
-CCParser is designed to assist developers in:
-
-Building payment processing systems
-Testing and validating payment integrations
-Educational purposes and learning about payment card industry standards
-Fraud detection and prevention systems
-
-Prohibited Uses:
-
-Unauthorized access to financial systems or data
-Credit card fraud, carding, or any form of financial crime
-Harvesting, storing, or processing stolen card information
-Any activity that violates applicable laws or regulations
-By using this library, you agree to comply with all applicable laws, including but not limited to PCI-DSS standards, and take full responsibility for your use of this software. The author(s) are not responsible for any misuse or illegal activities conducted with this tool.
-
-If you suspect fraudulent activity, please report it to your local authorities.
-
-💳 Supported Card Types
-CCParser recognizes and validates multiple card providers:
-
-Visa: ^4[0-9]{12}(?:[0-9]{3})?$
-MasterCard: ^5[1-5][0-9]{14}$
-American Express (AMEX): ^3[47][0-9]{13}$
-Discover: ^6(?:011|5[0-9]{2})[0-9]{12}$
-JCB: ^(?:2131|1800|35\d{3})\d{11}$
-Diners Club: ^3(?:0[0-5]|[68][0-9])[0-9]{11}$
-UnionPay: ^62[0-9]{14,17}$
-📥 Installation
-Install CCParser using pip:
-
-pip install ccparser
-📝 Usage Examples
-Supported Card Formats
-CCParser supports various card formats with different delimiters and expiry formats:
-
-4111111111111111|12/30|123
-4111111111111111|12|2030|123
-4111111111111111|12|30|123
-4111111111111111 12 2030 123
-4111111111111111 12 30 123
-4111111111111111:12:2030:123
-4111111111111111:12:30:123
-Python API
-from ccparser import CCParser
-
+# Initialize with a raw string
 card = CCParser("4111111111111111|12|2030|123")
-print(card.get_number())  # 4111111111111111
-print(card.get_formatted_number())  # 4111 1111 1111 1111
-print(card.get_expiry())  # 12/30
-print(card.get_cvv())  # 123
-print(card.is_valid())  # True
-print(card.get_card_type())  # Visa
-print(card.get_masked_number())  # **** **** **** 1111
-print(card.get_year())  # 2030
-print(card.get_month())  # 12
-print(card.get_card_details())  # Detailed card information
-Card Number Generation
-from ccparser.generator import generate_card_number
 
-print(generate_card_number("Visa"))  # Generates a valid Visa card number
-print(generate_card_number("MasterCard"))  # Generates a valid MasterCard number
-CLI Tool
-CCParser can also be used via the command line:
+print(card.get_formatted_number()) # 4111 1111 1111 1111
+print(card.get_expiry())           # 12/30
+print(card.get_card_type())        # Visa
+print(card.is_valid())             # True
+print(card.get_masked_number())    # **** **** **** 1111
+Card Number GenerationPythonfrom ccparser.generator import generate_card_number
 
-ccparser "4111111111111111|12|2030|123"
+print(generate_card_number("Visa"))       # Generates a valid Visa
+print(generate_card_number("MasterCard")) # Generates a valid MasterCard
+CLI ToolBashccparser "4111111111111111|12|2030|123"
+⚠️ DisclaimerThis library is intended for educational and legitimate development purposes only.Prohibited Uses:Unauthorized access to financial data.Credit card fraud or "carding" activities.Storing or processing stolen card information.By using this library, you agree to comply with all applicable laws, including PCI-DSS standards. The author(s) are not responsible for any misuse or illegal activities conducted with this tool.🛠️ Development & CI/CDTesting: Automated tests via GitHub Actions.Distribution: Ready for PyPI.Documentation: Built with Markdown for easy reading.
